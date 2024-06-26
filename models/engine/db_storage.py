@@ -47,14 +47,14 @@ class DBStorage:
 
     def all(self, cls=None):
         """Return a dictionary of all/selected class objects"""
-        cls_dict = {}
-        for cls_name in classes:
-            if cls is None or cls is classes[cls_name] or cls is cls_name:
-                objs = self.__session.query(classes[cls_name]).all()
-                for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    cls_dict[key] = obj
-        return (cls_dict)
+        if cls is None:
+            objs = self.__session.query(State).all()
+            objs.extend(self.__session.query(City).all())
+        else:
+            if type(cls) == str:
+                cls = eval(cls)
+            objs = self.__session.query(cls)
+        return {"{}.{}".format(type(o).__name__, o.id): o for o in objs}
 
     def new(self, obj):
         """Add new object to the current database session"""
