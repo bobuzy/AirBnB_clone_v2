@@ -10,6 +10,7 @@ class City(BaseModel, Base):
     Attributes:
         name: name of the city
         state_id: id of the state the city belongs to
+    """
     __tablename__ = "cities"
     name = Column(String(128), nullable=False)
     state_id = Column(String(60), ForeignKey("states.id"), nullable=False)
