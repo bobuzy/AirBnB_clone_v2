@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 class Place(BaseModel, Base):
     """Place class definition"""
 
-    __tablename__ = "places"
+    __tablename__ = "users"
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
