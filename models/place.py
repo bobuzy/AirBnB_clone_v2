@@ -25,7 +25,7 @@ class Place(BaseModel, Base):
 
  """   @property
     def reviews(self):
-        """Getter attribute for reviews when using FileStorage"""
+        Getter attribute for reviews when using FileStorage
         if models.storage_type == 'db':
             return self.reviews
         else:
