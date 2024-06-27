@@ -34,7 +34,7 @@ class Place(BaseModel, Base):
     amenity_ids = []
     reviews = relationship("Review", backref="place", cascade="all, delete")
 
-    @property
+"""    @property
     def reviews(self):
         """Getter attribute for reviews when using FileStorage"""
         if models.storage_type == 'db':
@@ -44,4 +44,4 @@ class Place(BaseModel, Base):
             for review in models.storage.all(Review).values():
                 if review.place_id == self.id:
                     reviews.append(review)
-            return reviews
+            return reviews"""
