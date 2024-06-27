@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
+import models
 
 
 class Place(BaseModel, Base):
@@ -22,7 +23,7 @@ class Place(BaseModel, Base):
     amenity_ids = []
     reviews = relationship("Review", backref="place", cascade="all, delete")
 
-"""    @property
+    @property
     def reviews(self):
         """Getter attribute for reviews when using FileStorage"""
         if models.storage_type == 'db':
@@ -32,4 +33,4 @@ class Place(BaseModel, Base):
             for review in models.storage.all(Review).values():
                 if review.place_id == self.id:
                     reviews.append(review)
-            return reviews"""
+            return reviews
