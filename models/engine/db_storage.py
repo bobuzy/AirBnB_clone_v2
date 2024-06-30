@@ -48,13 +48,15 @@ class DBStorage:
     def all(self, cls=None):
         """Return a dictionary of all/selected class objects"""
         if cls is None:
-            objs = self.__session.query(State).all()
-            objs.extend(self.__session.query(City).all())
-            objs.extend(self.__session.query(User).all())
+            objs = []
+            for cls_name in classes.values():
+                objs.extend(self.__session.query(cls_name).all())
         else:
             if type(cls) == str:
-                cls = eval(cls)
-            objs = self.__session.query(cls)
+                cls = classes.get(cls, None)
+            if cls is None:
+                return {}
+            objs = self.__session.query(cls).all()
         return {"{}.{}".format(type(o).__name__, o.id): o for o in objs}
 
     def new(self, obj):
@@ -77,3 +79,12 @@ class DBStorage:
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session
+
+    def get(self, cls, id):
+        """
+        Retrieves one object based on the class name and its ID.
+        """
+        if cls not in classes:
+            return None
+        return self.__session.query(classes[cls]).filter_by(id=id).first()
+
