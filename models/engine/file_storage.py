@@ -2,6 +2,13 @@
 """This module defines a class to manage file storage for hbnb clone"""
 import json
 import os
+from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
@@ -34,32 +41,13 @@ class FileStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
-
-        classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
-        if os.path.exists(self.__file_path):
-            try:
-                with open(self.__file_path, 'r', encoding='utf-8') as f:
-                    temp = json.load(f)
-                    for key, val in temp.items():
-                        class_name = val['__class__']
-                        cls = globals()[class_name]
-                        self.__objects[key] = cls(**val)
-            except (json.JSONDecodeError, KeyError) as e:
-                print(f"Error loading JSON file: {e}")
-                self.__objects = {}
-        else:
-            self.__objects = {}
+        try:
+            with open(self.__file_path, 'r', encoding="UTF-8") as f:
+                for key, value in (json.load(f)).items():
+                    value = eval(value["__class__"])(**value)
+                    self.__objects[key] = value
+        except FileNotFoundError:
+            pass
 
     def delete(self, obj=None):
         """ Deletes obj from __objects if it’s inside.
