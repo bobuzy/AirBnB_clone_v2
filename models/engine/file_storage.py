@@ -35,7 +35,7 @@ class FileStorage:
         temp = {}
         for key, obj in self.__objects.items():
             if hasattr(obj, 'to_dict'):
-            temp[key] = obj.to_dict()
+                temp[key] = obj.to_dict()
             else:
                 temp[key] = obj.__dict__
         with open(self.__file_path, 'w') as f:
