@@ -87,4 +87,3 @@ class DBStorage:
         if cls not in classes:
             return None
         return self.__session.query(classes[cls]).filter_by(id=id).first()
-

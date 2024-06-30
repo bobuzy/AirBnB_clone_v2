@@ -25,9 +25,13 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
                     try:
-                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                        value = datetime.strptime(
+                                value, "%Y-%m-%dT%H:%M:%S.%f"
+                        )
                     except ValueError:
-                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S")
+                        value = datetime.strptime(
+                                value, "%Y-%m-%dT%H:%M:%S"
+                        )
                 if key != '__class__':
                     setattr(self, key, value)
             if 'id' not in kwargs:
@@ -45,7 +49,7 @@ class BaseModel:
     def save(self):
         """Updates updated_at with current time when instance is changed"""
         self.updated_at = datetime.now()
-        models.storage.new(self) 
+        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
