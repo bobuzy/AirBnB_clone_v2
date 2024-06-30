@@ -50,7 +50,6 @@ class Place(BaseModel, Base):
     amenities = relationship(
         "Amenity",
         secondary=place_amenity,
-        backref="places",
         back_populates="place_amenities",
         viewonly=False
     )
