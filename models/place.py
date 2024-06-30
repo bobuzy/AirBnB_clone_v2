@@ -28,20 +28,22 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0, nullable=False)
     latitude = Column(Float)
     longitude = Column(Float)
-    amenities = relationship(
-            "Amenity", secondary=place_amenity, viewonly=False)
+  
+    if models.storage_type == 'db':
+        amenities = relationship(
+            'Amenity', secondary=place_amenity, viewonly=False
+        )
+    else:
+        _amenity_ids = []
 
-    amenities = relationship(
-            "Amenity", secondary=place_amenity,
-            back_populates="place_amenities")
+        @property
+        def amenities(self):
+            """Getter for amenities in FileStorage"""
+            return [models.storage.get(Amenity, a_id) for a_id in self._amenity_ids]
 
-    @property
-    def amenities(self):
-        """ Returns list of amenity ids """
-        return self.amenity_ids
-
-    @amenities.setter
-    def amenities(self, obj=None):
-        """ Appends amenity ids to the attribute """
-        if type(obj) is Amenity and obj.id not in self.amenity_ids:
-            self.amenity_ids.append(obj.id)
+        @amenities.setter
+        def amenities(self, obj):
+            """Setter for amenities in FileStorage"""
+            if isinstance(obj, Amenity):
+                if obj.id not in self._amenity_ids:
+                    self._amenity_ids.append(obj.id)
