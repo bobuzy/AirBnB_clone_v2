@@ -24,3 +24,14 @@ class Place(BaseModel, Base):
     amenities = relationship("Amenity", secondary=place_amenity, viewonly=False)
 
     amenities = relationship("Amenity", secondary=place_amenity, back_populates="place_amenities")
+
+    @property
+    def amenities(self):
+        """Getter for amenities."""
+        return self._amenities
+
+    @amenities.setter
+    def amenities(self, obj):
+        """Setter for amenities."""
+        if isinstance(obj, Amenity):
+            self._amenities.append(obj)
