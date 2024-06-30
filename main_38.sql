@@ -31,12 +31,18 @@ INSERT INTO places
 (id, city_id, user_id, name, description, number_rooms, number_bathrooms, max_guest, price_by_night, created_at, updated_at) 
 VALUES ("my_id_p_3", "my_id_c_1", "my_id_u_1", "House Bla", "desc", 4, 2, 7, 150, CURDATE(), CURDATE());
 
--- Reviews
-INSERT INTO reviews (id, place_id, user_id, text, created_at, updated_at) VALUES ("my_id_r_0", "my_id_p_0", "my_id_u_2", "Cool", CURDATE(), CURDATE());
-INSERT INTO reviews (id, place_id, user_id, text, created_at, updated_at) VALUES ("my_id_r_1", "my_id_p_0", "my_id_u_3", "Amazing house", CURDATE(), CURDATE());
+-- Amenities
+INSERT INTO amenities (id, name, created_at, updated_at) VALUES ("my_id_0", "my_name_0", CURDATE(), CURDATE());
+INSERT INTO amenities (id, name, created_at, updated_at) VALUES ("my_id_1", "my_name_1", CURDATE(), CURDATE());
+INSERT INTO amenities (id, name, created_at, updated_at) VALUES ("my_id_2", "my_name_2", CURDATE(), CURDATE());
+INSERT INTO amenities (id, name, created_at, updated_at) VALUES ("my_id_3", "my_name_3", CURDATE(), CURDATE());
 
-INSERT INTO reviews (id, place_id, user_id, text, created_at, updated_at) VALUES ("my_id_r_2", "my_id_p_1", "my_id_u_2", "Bad place", CURDATE(), CURDATE());
+-- place_amenity
+INSERT INTO place_amenity (place_id, amenity_id) VALUES ("my_id_p_0", "my_id_0");
+INSERT INTO place_amenity (place_id, amenity_id) VALUES ("my_id_p_0", "my_id_1");
+INSERT INTO place_amenity (place_id, amenity_id) VALUES ("my_id_p_0", "my_id_2");
 
-INSERT INTO reviews (id, place_id, user_id, text, created_at, updated_at) VALUES ("my_id_r_3", "my_id_p_3", "my_id_u_3", "Cool", CURDATE(), CURDATE());
-INSERT INTO reviews (id, place_id, user_id, text, created_at, updated_at) VALUES ("my_id_r_4", "my_id_p_3", "my_id_u_1", "Ok", CURDATE(), CURDATE());
-INSERT INTO reviews (id, place_id, user_id, text, created_at, updated_at) VALUES ("my_id_r_5", "my_id_p_3", "my_id_u_2", "Super cool", CURDATE(), CURDATE());
+INSERT INTO place_amenity (place_id, amenity_id) VALUES ("my_id_p_1", "my_id_1");
+
+INSERT INTO place_amenity (place_id, amenity_id) VALUES ("my_id_p_3", "my_id_3");
+INSERT INTO place_amenity (place_id, amenity_id) VALUES ("my_id_p_3", "my_id_2");
