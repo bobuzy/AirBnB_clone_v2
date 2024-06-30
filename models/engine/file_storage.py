@@ -31,12 +31,15 @@ class FileStorage:
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
     def save(self):
-        """Saves storage dictionary to file"""
-        my_dict = {}
-        for key, value in self.__objects.items():
-            my_dict[key] = value.to_dict()
-        with open(self.__file_path, 'w', encoding="UTF-8") as f:
-            json.dump(my_dict, f)
+        """Serialize __objects to the JSON file"""
+        temp = {}
+        for key, obj in self.__objects.items():
+            if hasattr(obj, 'to_dict'):
+            temp[key] = obj.to_dict()
+            else:
+                temp[key] = obj.__dict__
+        with open(self.__file_path, 'w') as f:
+            json.dump(temp, f)
 
     def reload(self):
         """Loads storage dictionary from file"""
