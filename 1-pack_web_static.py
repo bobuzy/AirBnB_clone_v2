@@ -13,10 +13,10 @@ def do_pack():
 
     local('mkdir -p versions')
 
-    archive = "versions/web_static_{}.tgz".format(formatted_time) 
-    result = local('tar -cvzf {} web_static'.format(archive))
+    archive = "web_static_{}.tgz".format(formatted_time) 
+    result = local('tar -cvzf versions/{} web_static'.format(archive))
 
-    if result.ok:
+    if result is not None:
         return archive
     else:
         return None
