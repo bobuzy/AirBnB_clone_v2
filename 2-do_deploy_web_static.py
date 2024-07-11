@@ -3,7 +3,7 @@
 Fabric script to distribute archive to the web servers
 """
 
-from fabric.api import put, run, env
+from fabric.api import *
 from os.path import exists
 env.hosts = ['54.237.36.103', '100.24.74.195']
 env.user = 'ubuntu'
