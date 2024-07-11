@@ -10,25 +10,29 @@ env.user = 'ubuntu'
 
 
 def do_deploy(archive_path):
-    """Decompress and distribute archive to web servers"""
-    try:
-        if not exists(archive_path):
-            return False
-        put(archive_path, '/tmp/')
+    """
+    Decompress and distribute archive to web servers.
 
-        timestamp = archive_path[-18:-4]
-        sudo('mkdir -p /data/web_static/releases/
-              webstatic_{}'.format(timestamp))
-        sudo('tar -xzf /tmp/web_static_{}.tgz -C /data/web_static/
-              releases/web_static_{}/'.format(timestamp, timestamp))
-        sudo('mv /data/web_static/releases/web_static_{}/web_static/* \
-/data/web_static/releases/web_static_{}/'.format(timestamp, timestamp))
-        sudo('rm -rf /data/web_static/releases/\
-web_static_{}/web_static'.format(timestamp))
-        sudo('rm -rf /data/web_static/current')
-        sudo('ln -s /data/web_static/releases/\
-web_static_{}/ /data/web_static/current'.format(timestamp))
+    Args:
+        archive_path (str): Path to the archive file to be deployed.
+
+    Returns:
+        bool: True if the deployment was successful, False otherwise.
+    """
+    if exists(archive_path) is False:
+        return False
+    try:
+        file_n = archive_path.split("/")[-1]
+        no_ext = file_n.split(".")[0]
+        path = "/data/web_static/releases/"
+        put(archive_path, '/tmp/')
+        run('mkdir -p {}{}/'.format(path, no_ext))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
+        run('rm /tmp/{}'.format(file_n))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
+        run('rm -rf {}{}/web_static'.format(path, no_ext))
+        run('rm -rf /data/web_static/current')
+        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
+        return True
     except:
         return False
-
-    return True
