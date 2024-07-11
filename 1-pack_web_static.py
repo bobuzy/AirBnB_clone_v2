@@ -1,7 +1,10 @@
 #!/usr/bin/python3
+"""Fabric script to genereate tgz archive from web_static folder"""
+
 
 from fabric.api import *
 from datetime import datetime
+
 
 def do_pack():
     """Create a .tgz archive from the contents of the web_static folder."""
