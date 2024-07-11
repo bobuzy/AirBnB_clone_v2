@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 """
-Fabric script that decompresses and deploys .tgz files passed 
+Fabric script to distribute archive to the web servers
 """
 
 from fabric.api import put, run, env
 from os.path import exists
-env.hosts = ['100.24.74.195', '54.237.36.103']
-env.user = 'ubuntu'
+env.hosts = ['52.205.90.195', '54.197.207.11']
+
 
 def do_deploy(archive_path):
-    """Distribute archive to the web servers abd deploy"""
+    """Decompress and distribute archive to web servers"""
     if exists(archive_path) is False:
         return False
     try:
@@ -25,5 +25,5 @@ def do_deploy(archive_path):
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except:
+    except Exception:
         return False
