@@ -6,7 +6,7 @@ Fabric script that decompresses and deploys .tgz files passed
 from fabric.api import put, run, env
 from os.path import exists
 env.hosts = ['100.24.74.195', '54.237.36.103']
-
+env.user = 'ubuntu'
 
 def do_deploy(archive_path):
     """Distribute archive to the web servers abd deploy"""
