@@ -33,6 +33,7 @@ def hello_python(text="is cool"):
 
 @app.route("/number/<int:n>")
 def is_number(n):
+    """Return 'n is a number', if n is an integer"""
     return "{} is a number".format(n)
 
 
