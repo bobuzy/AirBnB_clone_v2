@@ -80,14 +80,6 @@ class DBStorage:
         Session = scoped_session(session_factory)
         self.__session = Session
 
-    def get(self, cls, id):
-        """
-        Retrieves one object based on the class name and its ID.
-        """
-        if cls not in classes:
-            return None
-        return self.__session.query(classes[cls]).filter_by(id=id).first()
-
     def close(self):
         """Close the working SQLAlchemy session"""
         self.__session.remove()
