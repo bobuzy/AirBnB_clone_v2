@@ -19,6 +19,8 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """Return list of cities linked to a state"""
+            from models import storage
+            from models.city import City
             city_list = []
             all_cities = storage.all(City)
             for city in all_cities.values():
