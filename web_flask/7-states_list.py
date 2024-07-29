@@ -15,6 +15,7 @@ def list_states():
     sorted_states = sorted(state_list.values(), key=lambda state: state.name)
     return render_template("7-states_list.html", states=sorted_states)
 
+
 @app.teardown_appcontext
 def stop_session(exception=None):
     """Clean-up session"""
@@ -22,4 +23,5 @@ def stop_session(exception=None):
 
 
 if __name__ == '__main__':
+
     app.run(host='0.0.0.0', port=5000)
