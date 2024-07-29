@@ -16,7 +16,7 @@ def list_states():
     return render_template("7-states_list.html", states=sorted_states)
 
 @app.teardown_appcontext
-def stop_session(None):
+def stop_session(exception=None):
     """Clean-up session"""
     storage.close()
 
